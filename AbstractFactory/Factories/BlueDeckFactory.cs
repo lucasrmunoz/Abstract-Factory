@@ -9,15 +9,15 @@ namespace AbstractFactory.Factories;
 /// </summary>
 public class BlueDeckFactory : ICardFactory
 {
-    public ICreature CreateCreature()
+    public ICreature CreateCreature(string cardName)
     {
-        // Returns a blue creature (Merfolk Wizard)
-        return new BlueCreature();
+        // Returns a blue creature from MTG API
+        return new BlueCreature(cardName);
     }
 
-    public ISpell CreateSpell()
+    public ISpell CreateSpell(string cardName)
     {
-        // Returns a blue spell (Counterspell)
-        return new BlueSpell();
+        // Returns a blue spell from MTG API
+        return new BlueSpell(cardName);
     }
 }

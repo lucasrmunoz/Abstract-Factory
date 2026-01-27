@@ -1,30 +1,101 @@
 using AbstractFactory.Interfaces;
+using AbstractFactory.Services;
 
 namespace AbstractFactory.Products;
 
 /// <summary>
-/// Concrete Product: Red-aligned creature (Goblin Warrior)
+/// Concrete Product: Red-aligned creature
 /// Represents aggressive, fast creatures typical of red in MTG
+/// Fetches real card data from MTG API
 /// </summary>
 public class RedCreature : ICreature
 {
-    private readonly string _name = "Goblin Warrior";
-    private readonly int _power = 2;
-    private readonly int _toughness = 1;
-    private readonly string _ability = "Haste";
+    private readonly string _name;
+    private readonly string _manaCost;
+    private readonly string _power;
+    private readonly string _toughness;
+    private readonly string _text;
 
-    public void Attack()
+    public RedCreature(string cardName)
     {
-        Console.WriteLine($"[Red Creature] {_name} attacks aggressively! ({_power} damage)");
+        _name = cardName;
+        _manaCost = "N/A";
+        _power = "?";
+        _toughness = "?";
+        _text = "Searching for card...";
+
+        try
+        {
+            var cardData = MtgCardLookup.GetCardByName(cardName).Result;
+
+            if (cardData != null)
+            {
+                _name = cardData.Name ?? cardName;
+                _manaCost = cardData.ManaCost ?? "N/A";
+                _power = cardData.Power ?? "?";
+                _toughness = cardData.Toughness ?? "?";
+                _text = cardData.Text ?? "No card text available";
+            }
+            else
+            {
+                _text = "Card not found in database";
+            }
+        }
+        catch (Exception ex)
+        {
+            _text = $"Error fetching card: {ex.Message}";
+        }
     }
 
-    public void Defend()
+    public string GetName()
     {
-        Console.WriteLine($"[Red Creature] {_name} blocks with {_toughness} toughness (not ideal for defense)");
+        return _name;
     }
 
-    public string GetStats()
+    public string GetManaCost()
     {
-        return $"{_name} ({_power}/{_toughness}) - \"{_ability}: Can attack immediately!\"";
+        return _manaCost;
+    }
+
+    public string GetPowerToughness()
+    {
+        return $"{_power}/{_toughness}";
+    }
+
+    public string GetKeywords()
+    {
+        // Extract keywords from card text (Haste, Flying, etc.)
+        if (string.IsNullOrEmpty(_text) || _text.Contains("not found") || _text.Contains("Error"))
+            return "None";
+
+        var keywords = new List<string>();
+        var knownKeywords = new[] { "Haste", "Flying", "First strike", "Double strike", "Deathtouch",
+                                     "Trample", "Vigilance", "Lifelink", "Menace", "Reach" };
+
+        foreach (var keyword in knownKeywords)
+        {
+            if (_text.Contains(keyword, StringComparison.OrdinalIgnoreCase))
+            {
+                keywords.Add(keyword);
+            }
+        }
+
+        return keywords.Count > 0 ? string.Join(", ", keywords) : "None";
+    }
+
+    public string GetText()
+    {
+        return _text;
+    }
+
+    public void DisplayDetails()
+    {
+        Console.WriteLine($"\n╔═══ RED CREATURE ═══");
+        Console.WriteLine($"║ Name: {GetName()}");
+        Console.WriteLine($"║ Cost: {GetManaCost()}");
+        Console.WriteLine($"║ Power/Toughness: {GetPowerToughness()}");
+        Console.WriteLine($"║ Keywords: {GetKeywords()}");
+        Console.WriteLine($"║ Text: {GetText()}");
+        Console.WriteLine($"╚════════════════════");
     }
 }

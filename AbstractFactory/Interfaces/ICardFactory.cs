@@ -7,12 +7,14 @@ namespace AbstractFactory.Interfaces;
 public interface ICardFactory
 {
     /// <summary>
-    /// Factory method to create a creature card
+    /// Factory method to create a creature card by name
     /// </summary>
-    ICreature CreateCreature();
+    /// <param name="cardName">The name of the creature card to create</param>
+    ICreature CreateCreature(string cardName);
 
     /// <summary>
-    /// Factory method to create a spell card
+    /// Factory method to create a spell card by name
     /// </summary>
-    ISpell CreateSpell();
+    /// <param name="cardName">The name of the spell card to create</param>
+    ISpell CreateSpell(string cardName);
 }

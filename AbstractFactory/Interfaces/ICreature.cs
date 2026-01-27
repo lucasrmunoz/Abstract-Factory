@@ -7,17 +7,32 @@ namespace AbstractFactory.Interfaces;
 public interface ICreature
 {
     /// <summary>
-    /// Display the creature's attack behavior
+    /// Get the creature's name
     /// </summary>
-    void Attack();
+    string GetName();
 
     /// <summary>
-    /// Display the creature's defense behavior
+    /// Get the creature's mana cost
     /// </summary>
-    void Defend();
+    string GetManaCost();
 
     /// <summary>
-    /// Get the creature's power and toughness stats
+    /// Get the creature's power and toughness
     /// </summary>
-    string GetStats();
+    string GetPowerToughness();
+
+    /// <summary>
+    /// Get the creature's keywords (e.g., Flying, Haste, Trample)
+    /// </summary>
+    string GetKeywords();
+
+    /// <summary>
+    /// Get the creature's card text
+    /// </summary>
+    string GetText();
+
+    /// <summary>
+    /// Display all card details
+    /// </summary>
+    void DisplayDetails();
 }

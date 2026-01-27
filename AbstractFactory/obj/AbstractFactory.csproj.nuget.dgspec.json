@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\lucas\\Documents\\Projects\\Abstract Factory\\AbstractFactory\\AbstractFactory.csproj": {}
+    "D:\\SoftwareProjects\\Abstract-Factory\\AbstractFactory\\AbstractFactory.csproj": {}
   },
   "projects": {
-    "C:\\Users\\lucas\\Documents\\Projects\\Abstract Factory\\AbstractFactory\\AbstractFactory.csproj": {
+    "D:\\SoftwareProjects\\Abstract-Factory\\AbstractFactory\\AbstractFactory.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\lucas\\Documents\\Projects\\Abstract Factory\\AbstractFactory\\AbstractFactory.csproj",
+        "projectUniqueName": "D:\\SoftwareProjects\\Abstract-Factory\\AbstractFactory\\AbstractFactory.csproj",
         "projectName": "AbstractFactory",
-        "projectPath": "C:\\Users\\lucas\\Documents\\Projects\\Abstract Factory\\AbstractFactory\\AbstractFactory.csproj",
+        "projectPath": "D:\\SoftwareProjects\\Abstract-Factory\\AbstractFactory\\AbstractFactory.csproj",
         "packagesPath": "C:\\Users\\lucas\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\lucas\\Documents\\Projects\\Abstract Factory\\AbstractFactory\\obj\\",
+        "outputPath": "D:\\SoftwareProjects\\Abstract-Factory\\AbstractFactory\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
@@ -26,7 +26,6 @@
         ],
         "sources": {
           "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
-          "C:\\Program Files\\dotnet\\library-packs": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
@@ -50,6 +49,16 @@
       "frameworks": {
         "net10.0": {
           "targetAlias": "net10.0",
+          "dependencies": {
+            "MtgApiManager.Lib": {
+              "target": "Package",
+              "version": "[2.4.0, )"
+            },
+            "Newtonsoft.Json": {
+              "target": "Package",
+              "version": "[13.0.4, )"
+            }
+          },
           "imports": [
             "net461",
             "net462",

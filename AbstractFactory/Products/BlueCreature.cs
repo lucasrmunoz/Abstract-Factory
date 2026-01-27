@@ -1,30 +1,101 @@
 using AbstractFactory.Interfaces;
+using AbstractFactory.Services;
 
 namespace AbstractFactory.Products;
 
 /// <summary>
-/// Concrete Product: Blue-aligned creature (Merfolk Wizard)
+/// Concrete Product: Blue-aligned creature
 /// Represents evasive, controlling creatures typical of blue in MTG
+/// Fetches real card data from MTG API
 /// </summary>
 public class BlueCreature : ICreature
 {
-    private readonly string _name = "Merfolk Wizard";
-    private readonly int _power = 1;
-    private readonly int _toughness = 2;
-    private readonly string _ability = "Flying";
+    private readonly string _name;
+    private readonly string _manaCost;
+    private readonly string _power;
+    private readonly string _toughness;
+    private readonly string _text;
 
-    public void Attack()
+    public BlueCreature(string cardName)
     {
-        Console.WriteLine($"[Blue Creature] {_name} attacks through the air! ({_power} damage with evasion)");
+        _name = cardName;
+        _manaCost = "N/A";
+        _power = "?";
+        _toughness = "?";
+        _text = "Searching for card...";
+
+        try
+        {
+            var cardData = MtgCardLookup.GetCardByName(cardName).Result;
+
+            if (cardData != null)
+            {
+                _name = cardData.Name ?? cardName;
+                _manaCost = cardData.ManaCost ?? "N/A";
+                _power = cardData.Power ?? "?";
+                _toughness = cardData.Toughness ?? "?";
+                _text = cardData.Text ?? "No card text available";
+            }
+            else
+            {
+                _text = "Card not found in database";
+            }
+        }
+        catch (Exception ex)
+        {
+            _text = $"Error fetching card: {ex.Message}";
+        }
     }
 
-    public void Defend()
+    public string GetName()
     {
-        Console.WriteLine($"[Blue Creature] {_name} defends with {_toughness} toughness (solid blocker)");
+        return _name;
     }
 
-    public string GetStats()
+    public string GetManaCost()
     {
-        return $"{_name} ({_power}/{_toughness}) - \"{_ability}: Can't be blocked except by creatures with flying or reach\"";
+        return _manaCost;
+    }
+
+    public string GetPowerToughness()
+    {
+        return $"{_power}/{_toughness}";
+    }
+
+    public string GetKeywords()
+    {
+        // Extract keywords from card text (Flying, etc.)
+        if (string.IsNullOrEmpty(_text) || _text.Contains("not found") || _text.Contains("Error"))
+            return "None";
+
+        var keywords = new List<string>();
+        var knownKeywords = new[] { "Haste", "Flying", "First strike", "Double strike", "Deathtouch",
+                                     "Trample", "Vigilance", "Lifelink", "Menace", "Reach", "Hexproof", "Flash" };
+
+        foreach (var keyword in knownKeywords)
+        {
+            if (_text.Contains(keyword, StringComparison.OrdinalIgnoreCase))
+            {
+                keywords.Add(keyword);
+            }
+        }
+
+        return keywords.Count > 0 ? string.Join(", ", keywords) : "None";
+    }
+
+    public string GetText()
+    {
+        return _text;
+    }
+
+    public void DisplayDetails()
+    {
+        Console.WriteLine($"\n╔═══ BLUE CREATURE ═══");
+        Console.WriteLine($"║ Name: {GetName()}");
+        Console.WriteLine($"║ Cost: {GetManaCost()}");
+        Console.WriteLine($"║ Power/Toughness: {GetPowerToughness()}");
+        Console.WriteLine($"║ Keywords: {GetKeywords()}");
+        Console.WriteLine($"║ Text: {GetText()}");
+        Console.WriteLine($"╚═════════════════════");
     }
 }

@@ -12,3 +12,24 @@ C:\Users\lucas\Documents\Projects\Abstract Factory\AbstractFactory\obj\Debug\net
 C:\Users\lucas\Documents\Projects\Abstract Factory\AbstractFactory\obj\Debug\net10.0\AbstractFactory.pdb
 C:\Users\lucas\Documents\Projects\Abstract Factory\AbstractFactory\obj\Debug\net10.0\AbstractFactory.genruntimeconfig.cache
 C:\Users\lucas\Documents\Projects\Abstract Factory\AbstractFactory\obj\Debug\net10.0\ref\AbstractFactory.dll
+D:\SoftwareProjects\Abstract-Factory\AbstractFactory\bin\Debug\net10.0\AbstractFactory.exe
+D:\SoftwareProjects\Abstract-Factory\AbstractFactory\bin\Debug\net10.0\AbstractFactory.deps.json
+D:\SoftwareProjects\Abstract-Factory\AbstractFactory\bin\Debug\net10.0\AbstractFactory.runtimeconfig.json
+D:\SoftwareProjects\Abstract-Factory\AbstractFactory\bin\Debug\net10.0\AbstractFactory.dll
+D:\SoftwareProjects\Abstract-Factory\AbstractFactory\bin\Debug\net10.0\AbstractFactory.pdb
+D:\SoftwareProjects\Abstract-Factory\AbstractFactory\obj\Debug\net10.0\AbstractFactory.GeneratedMSBuildEditorConfig.editorconfig
+D:\SoftwareProjects\Abstract-Factory\AbstractFactory\obj\Debug\net10.0\AbstractFactory.AssemblyInfoInputs.cache
+D:\SoftwareProjects\Abstract-Factory\AbstractFactory\obj\Debug\net10.0\AbstractFactory.AssemblyInfo.cs
+D:\SoftwareProjects\Abstract-Factory\AbstractFactory\obj\Debug\net10.0\AbstractFactory.csproj.CoreCompileInputs.cache
+D:\SoftwareProjects\Abstract-Factory\AbstractFactory\obj\Debug\net10.0\AbstractFactory.sourcelink.json
+D:\SoftwareProjects\Abstract-Factory\AbstractFactory\obj\Debug\net10.0\AbstractFactory.dll
+D:\SoftwareProjects\Abstract-Factory\AbstractFactory\obj\Debug\net10.0\refint\AbstractFactory.dll
+D:\SoftwareProjects\Abstract-Factory\AbstractFactory\obj\Debug\net10.0\AbstractFactory.pdb
+D:\SoftwareProjects\Abstract-Factory\AbstractFactory\obj\Debug\net10.0\AbstractFactory.genruntimeconfig.cache
+D:\SoftwareProjects\Abstract-Factory\AbstractFactory\obj\Debug\net10.0\ref\AbstractFactory.dll
+d:\SoftwareProjects\Abstract-Factory\AbstractFactory\obj\Debug\net10.0\AbstractFactory.csproj.AssemblyReference.cache
+d:\SoftwareProjects\Abstract-Factory\AbstractFactory\bin\Debug\net10.0\Flurl.dll
+d:\SoftwareProjects\Abstract-Factory\AbstractFactory\bin\Debug\net10.0\Flurl.Http.dll
+d:\SoftwareProjects\Abstract-Factory\AbstractFactory\bin\Debug\net10.0\MtgApiManager.Lib.dll
+d:\SoftwareProjects\Abstract-Factory\AbstractFactory\bin\Debug\net10.0\Newtonsoft.Json.dll
+d:\SoftwareProjects\Abstract-Factory\AbstractFactory\obj\Debug\net10.0\Abstract.2246C68C.Up2Date

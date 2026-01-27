@@ -17,27 +17,50 @@ class Program
     static void Main(string[] args)
     {
         Console.WriteLine("╔══════════════════════════════════════════════════════════════╗");
-        Console.WriteLine("║  Abstract Factory Pattern - MTG Card Creator Demo           ║");
+        Console.WriteLine("║  Abstract Factory Pattern - MTG Card Lookup                 ║");
         Console.WriteLine("╚══════════════════════════════════════════════════════════════╝\n");
 
-        // Demonstrate Red deck factory
-        Console.WriteLine("=== RED DECK FACTORY ===");
-        ICardFactory redFactory = new RedDeckFactory();
-        DemonstrateFactory(redFactory);
+        // Get user input for deck color
+        Console.WriteLine("Choose your deck color:");
+        Console.WriteLine("1. Red (Aggressive)");
+        Console.WriteLine("2. Blue (Control)");
+        Console.Write("\nEnter choice (1 or 2): ");
+        string? choice = Console.ReadLine();
 
-        Console.WriteLine("\n" + new string('─', 60) + "\n");
+        ICardFactory factory = choice == "2"
+            ? new BlueDeckFactory()
+            : new RedDeckFactory();
 
-        // Demonstrate Blue deck factory
-        Console.WriteLine("=== BLUE DECK FACTORY ===");
-        ICardFactory blueFactory = new BlueDeckFactory();
-        DemonstrateFactory(blueFactory);
+        string deckColor = choice == "2" ? "Blue" : "Red";
+        Console.WriteLine($"\n=== {deckColor.ToUpper()} DECK FACTORY ===\n");
+
+        // Get creature name from user
+        Console.Write("Enter creature card name (e.g., 'Goblin Guide', 'Snapcaster Mage'): ");
+        string? creatureName = Console.ReadLine();
+
+        if (string.IsNullOrWhiteSpace(creatureName))
+        {
+            creatureName = choice == "2" ? "Merfolk" : "Goblin";
+        }
+
+        // Get spell name from user
+        Console.Write("Enter spell card name (e.g., 'Lightning Bolt', 'Counterspell'): ");
+        string? spellName = Console.ReadLine();
+
+        if (string.IsNullOrWhiteSpace(spellName))
+        {
+            spellName = choice == "2" ? "Counterspell" : "Lightning Bolt";
+        }
+
+        Console.WriteLine("\nFetching cards from MTG API...");
+        DemonstrateFactory(factory, creatureName, spellName);
 
         Console.WriteLine("\n" + new string('═', 60));
-        Console.WriteLine("\n🎯 Key Takeaway:");
-        Console.WriteLine("   The DemonstrateFactory() method works with ANY factory");
-        Console.WriteLine("   that implements ICardFactory. It doesn't know or care");
-        Console.WriteLine("   whether it's creating Red or Blue cards!");
-        Console.WriteLine("\n   This is the power of the Abstract Factory pattern! ✨");
+        Console.WriteLine("\n📝 Abstract Factory Pattern Benefits:");
+        Console.WriteLine("   ✓ Client code works with ANY factory via ICardFactory");
+        Console.WriteLine("   ✓ Deck color determines which factory is used");
+        Console.WriteLine("   ✓ Factory creates products matching its theme");
+        Console.WriteLine("   ✓ Real MTG data fetched dynamically from API");
         Console.WriteLine(new string('═', 60));
     }
 
@@ -46,20 +69,16 @@ class Program
     /// This method can use ANY concrete factory without knowing its specific type.
     /// This demonstrates the core benefit of the Abstract Factory pattern.
     /// </summary>
-    static void DemonstrateFactory(ICardFactory factory)
+    static void DemonstrateFactory(ICardFactory factory, string creatureName, string spellName)
     {
         // Create a creature using the factory
-        Console.WriteLine("\n📦 Creating a creature...");
-        ICreature creature = factory.CreateCreature();
-        Console.WriteLine($"   {creature.GetStats()}");
-        creature.Attack();
-        creature.Defend();
+        Console.WriteLine($"\n📦 Looking up creature: '{creatureName}'");
+        ICreature creature = factory.CreateCreature(creatureName);
+        creature.DisplayDetails();
 
         // Create a spell using the factory
-        Console.WriteLine("\n📦 Creating a spell...");
-        ISpell spell = factory.CreateSpell();
-        Console.WriteLine($"   Mana Cost: {spell.GetManaCost()}");
-        Console.WriteLine($"   Effect: {spell.GetEffect()}");
-        spell.Cast();
+        Console.WriteLine($"\n📦 Looking up spell: '{spellName}'");
+        ISpell spell = factory.CreateSpell(spellName);
+        spell.DisplayDetails();
     }
 }

@@ -7,17 +7,27 @@ namespace AbstractFactory.Interfaces;
 public interface ISpell
 {
     /// <summary>
-    /// Cast the spell and display its effect
+    /// Get the spell's name
     /// </summary>
-    void Cast();
+    string GetName();
 
     /// <summary>
-    /// Get the spell's effect description
-    /// </summary>
-    string GetEffect();
-
-    /// <summary>
-    /// Get the mana cost of the spell
+    /// Get the spell's mana cost
     /// </summary>
     string GetManaCost();
+
+    /// <summary>
+    /// Get the spell's keywords
+    /// </summary>
+    string GetKeywords();
+
+    /// <summary>
+    /// Get the spell's card text
+    /// </summary>
+    string GetText();
+
+    /// <summary>
+    /// Display all card details
+    /// </summary>
+    void DisplayDetails();
 }
