@@ -1,6 +1,6 @@
 # Abstract Factory Pattern - MTG Card Lookup
 
-A C# implementation of the **Abstract Factory** design pattern using Magic: The Gathering (MTG) cards as the domain model. This project demonstrates how to create families of related objects without specifying their concrete classes, with real-time card data fetched from the MTG API.
+A C# implementation of the **Abstract Factory** design pattern using Magic: The Gathering (MTG) cards as the domain model. This project demonstrates how to create families of related objects without specifying their concrete classes, with real-time card data fetched from the **Scryfall API**.
 
 ## What is the Abstract Factory Pattern?
 
@@ -20,10 +20,11 @@ Magic: The Gathering provides a perfect domain model because:
 
 ## Implementation Status
 
-- **MTG API Integration**: Using HttpClient to fetch real card data
+- **Scryfall API Integration**: Using HttpClient to fetch real card data
 - **User Input**: Dynamic deck color and card name selection
-- **API Endpoint**: https://api.magicthegathering.io/v1/cards
+- **API Endpoint**: https://api.scryfall.com/cards/named (with fuzzy search)
 - **Card Details Displayed**: Name, Mana Cost, Power/Toughness, Keywords, Card Text
+- **Modern Card Coverage**: Includes ALL sets including Universes Beyond (Final Fantasy, Lord of the Rings, etc.)
 - **Available Factories**: Red (Aggressive) and Blue (Control) deck factories
 
 ---
@@ -180,23 +181,38 @@ echo -e "2\nSnapcaster Mage\nCounterspell" | dotnet run --project AbstractFactor
 - **Force of Will** - Free counter spell
 - **Cryptic Command** - Modal powerhouse
 
+### Universes Beyond (Final Fantasy, Lord of the Rings, etc.)
+- **Emet-Selch of the Third Seat** - Final Fantasy Commander legendary creature
+- **Gandalf the White** - Lord of the Rings legendary creature
+- **Sauron, the Dark Lord** - Lord of the Rings legendary creature
+- **The One Ring** - Powerful artifact from LotR set
+
 ---
 
-## MTG API Integration
+## Scryfall API Integration
 
 ### API Details
-- **Endpoint**: https://api.magicthegathering.io/v1/cards
-- **Method**: GET with query parameter `?name={cardName}`
-- **Response**: JSON array of matching cards
-- **Rate Limit**: Free tier, no authentication required
+- **Endpoint**: <https://api.scryfall.com/cards/named>
+- **Method**: GET with query parameter `?fuzzy={cardName}`
+- **Response**: Single JSON card object with comprehensive data
+- **Documentation**: <https://scryfall.com/docs/api>
+- **Rate Limit**: 10 requests per second (free, no authentication required)
+
+### Benefits Over Previous API
+- **Complete Coverage**: Includes ALL modern sets (Universes Beyond, Secret Lairs, etc.)
+- **Fuzzy Search**: Handles typos and partial names automatically
+- **Active Maintenance**: Regularly updated with new releases
+- **Reliability**: Better uptime and performance
+- **Rich Data**: Includes colors, legality, pricing, and more
 
 ### How It Works
 
-1. User enters card name (e.g., "Goblin Guide")
-2. `MtgCardLookup.GetCardByName()` makes HTTP request via `HttpClient`
-3. API returns JSON with card data: name, manaCost, power, toughness, text
-4. Product class (e.g., `RedCreature`) stores the fetched data in fields
-5. `DisplayDetails()` method formats and displays the card information
+1. User enters card name (e.g., "Goblin Guide" or even "Gobln Gide")
+2. `MtgCardLookup.GetCardByName()` makes HTTP request to Scryfall's fuzzy endpoint
+3. Scryfall returns single best match with complete card data (name, mana_cost, type_line, oracle_text, power, toughness, colors)
+4. Service maps Scryfall's snake_case properties to CardData object
+5. Product class (e.g., `RedCreature`) stores the fetched data in fields
+6. `DisplayDetails()` method formats and displays the card information
 
 ### Code Flow
 ```csharp
@@ -212,11 +228,18 @@ if (cardData != null)
 }
 ```
 
+### Property Mapping
+Scryfall uses snake_case, we map to PascalCase:
+- `type_line` → `Type`
+- `oracle_text` → `Text`
+- `mana_cost` → `ManaCost`
+
 ### Error Handling
 - **Card not found**: Displays "Card not found in database"
 - **API error**: Shows "Error fetching card: [error message]"
 - **Empty input**: Uses default values (Goblin for Red, Merfolk for Blue)
 - **Network issues**: Gracefully degrades with error message
+- **Ambiguous results**: Scryfall returns best fuzzy match
 
 ---
 
@@ -368,6 +391,6 @@ This implementation follows the Abstract Factory pattern as described in:
 
 This project is for educational purposes to demonstrate the Abstract Factory design pattern.
 
-MTG card data provided by [Magic: The Gathering API](https://magicthegathering.io/) (https://api.magicthegathering.io).
+MTG card data provided by [Scryfall](https://scryfall.com/) (<https://api.scryfall.com>).
 
 Magic: The Gathering is a trademark of Wizards of the Coast LLC.

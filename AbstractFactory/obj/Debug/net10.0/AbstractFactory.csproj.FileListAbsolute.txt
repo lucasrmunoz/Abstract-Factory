@@ -27,9 +27,3 @@ D:\SoftwareProjects\Abstract-Factory\AbstractFactory\obj\Debug\net10.0\refint\Ab
 D:\SoftwareProjects\Abstract-Factory\AbstractFactory\obj\Debug\net10.0\AbstractFactory.pdb
 D:\SoftwareProjects\Abstract-Factory\AbstractFactory\obj\Debug\net10.0\AbstractFactory.genruntimeconfig.cache
 D:\SoftwareProjects\Abstract-Factory\AbstractFactory\obj\Debug\net10.0\ref\AbstractFactory.dll
-d:\SoftwareProjects\Abstract-Factory\AbstractFactory\obj\Debug\net10.0\AbstractFactory.csproj.AssemblyReference.cache
-d:\SoftwareProjects\Abstract-Factory\AbstractFactory\bin\Debug\net10.0\Flurl.dll
-d:\SoftwareProjects\Abstract-Factory\AbstractFactory\bin\Debug\net10.0\Flurl.Http.dll
-d:\SoftwareProjects\Abstract-Factory\AbstractFactory\bin\Debug\net10.0\MtgApiManager.Lib.dll
-d:\SoftwareProjects\Abstract-Factory\AbstractFactory\bin\Debug\net10.0\Newtonsoft.Json.dll
-d:\SoftwareProjects\Abstract-Factory\AbstractFactory\obj\Debug\net10.0\Abstract.2246C68C.Up2Date
