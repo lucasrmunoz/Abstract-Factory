@@ -81,30 +81,90 @@ The client **only** uses the abstract interfaces (`ICardFactory`, `ICreature`, `
 
 ## Visual Diagram
 
-```
-                    ┌─────────────────┐
-                    │   ICardFactory  │  ← Abstract Factory
-                    │  (interface)    │
-                    └────────┬────────┘
-                             │ implements
-            ┌────────────────┴────────────────┐
-            │                                 │
-   ┌────────▼────────┐              ┌────────▼────────┐
-   │ RedDeckFactory  │              │ BlueDeckFactory │  ← Concrete Factories
-   └────────┬────────┘              └────────┬────────┘
-            │ creates                        │ creates
-            ▼                                ▼
-   ┌─────────────────┐              ┌─────────────────┐
-   │  RedCreature    │              │  BlueCreature   │  ← Concrete Products
-   │  RedSpell       │              │  BlueSpell      │
-   └─────────────────┘              └─────────────────┘
-            │                                │
-            │ implements                     │ implements
-            ▼                                ▼
-   ┌─────────────────┐              ┌─────────────────┐
-   │   ICreature     │              │     ISpell      │  ← Abstract Products
-   │   (interface)   │              │   (interface)   │
-   └─────────────────┘              └─────────────────┘
+```mermaid
+classDiagram
+    class ICardFactory {
+        <<interface>>
+        +CreateCreature(cardName) ICreature
+        +CreateSpell(cardName) ISpell
+    }
+
+    class ICreature {
+        <<interface>>
+        +GetName() string
+        +GetManaCost() string
+        +GetPowerToughness() string
+        +GetKeywords() string
+        +GetText() string
+        +DisplayDetails() void
+    }
+
+    class ISpell {
+        <<interface>>
+        +GetName() string
+        +GetManaCost() string
+        +GetKeywords() string
+        +GetText() string
+        +DisplayDetails() void
+    }
+
+    class RedDeckFactory {
+        +CreateCreature(cardName) ICreature
+        +CreateSpell(cardName) ISpell
+    }
+
+    class BlueDeckFactory {
+        +CreateCreature(cardName) ICreature
+        +CreateSpell(cardName) ISpell
+    }
+
+    class RedCreature {
+        +GetName() string
+        +GetManaCost() string
+        +GetPowerToughness() string
+        +GetKeywords() string
+        +GetText() string
+        +DisplayDetails() void
+    }
+
+    class BlueCreature {
+        +GetName() string
+        +GetManaCost() string
+        +GetPowerToughness() string
+        +GetKeywords() string
+        +GetText() string
+        +DisplayDetails() void
+    }
+
+    class RedSpell {
+        +GetName() string
+        +GetManaCost() string
+        +GetKeywords() string
+        +GetText() string
+        +DisplayDetails() void
+    }
+
+    class BlueSpell {
+        +GetName() string
+        +GetManaCost() string
+        +GetKeywords() string
+        +GetText() string
+        +DisplayDetails() void
+    }
+
+    ICardFactory <|.. RedDeckFactory : implements
+    ICardFactory <|.. BlueDeckFactory : implements
+
+    ICreature <|.. RedCreature : implements
+    ICreature <|.. BlueCreature : implements
+
+    ISpell <|.. RedSpell : implements
+    ISpell <|.. BlueSpell : implements
+
+    RedDeckFactory ..> RedCreature : creates
+    RedDeckFactory ..> RedSpell : creates
+    BlueDeckFactory ..> BlueCreature : creates
+    BlueDeckFactory ..> BlueSpell : creates
 ```
 
 ---
