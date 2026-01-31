@@ -128,7 +128,8 @@ into their hand.
 ## How to Run
 
 ### Prerequisites
-- .NET 10 SDK or later
+
+- .NET 9 SDK or later
 - Internet connection (for MTG API calls)
 
 ### Build
@@ -136,12 +137,25 @@ into their hand.
 dotnet build
 ```
 
-### Run Interactively
+### Run Console App (Recommended)
+
+The enhanced console app features an interactive UI with arrow-key navigation, colored output, and formatted tables using [Spectre.Console](https://spectreconsole.net/).
+
+```bash
+dotnet run --project src/AbstractFactory.Console
+```
+
+**Note:** Run this in a proper terminal (Command Prompt, PowerShell, or Windows Terminal) - not the VS Code Debug Console, which doesn't support interactive features.
+
+### Run Original Version
+
+The original version uses basic console input/output:
+
 ```bash
 dotnet run --project AbstractFactory
 ```
 
-### Quick Test Examples
+### Quick Test Examples (Original Version)
 
 **Test Red deck:**
 ```bash
