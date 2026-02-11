@@ -1,6 +1,6 @@
 # Plan: Multi-Project Refactor with Spectre.Console + Future API/Next.js
 
-> **Status**: Phase 1 & 2 Complete
+> **Status**: Phase 1, 2 & 3.1 Complete
 
 ## Goal
 Restructure the project to support multiple frontends (Console, Web API, Next.js) sharing the same core logic.
@@ -54,13 +54,13 @@ Features:
 
 ## Phase 3: Future - API + Next.js (not implemented yet)
 
-### Step 3.1: Create `src/AbstractFactory.Api/`
-- [ ] ASP.NET Core minimal API
+### Step 3.1: Create `src/AbstractFactory.Api/` - COMPLETE
+- [x] ASP.NET Core minimal API
 - Endpoints:
   - `GET /api/decks` - list available deck types
   - `POST /api/cards/creature` - create creature card
   - `POST /api/cards/spell` - create spell card
-- CORS configured for Next.js dev server
+- [x] CORS configured for Next.js dev server
 
 ### Step 3.2: Create `src/frontend/` (Next.js)
 - [ ] Next.js 14+ with App Router

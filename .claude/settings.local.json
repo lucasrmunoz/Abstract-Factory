@@ -5,7 +5,9 @@
       "Bash(dotnet run)",
       "Bash(dotnet build:*)",
       "Bash(dotnet run:*)",
-      "Bash(curl:*)"
+      "Bash(curl:*)",
+      "Bash(dotnet sln:*)",
+      "Bash(timeout:*)"
     ]
   }
 }
