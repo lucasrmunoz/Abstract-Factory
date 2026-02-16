@@ -15,6 +15,7 @@ public class RedCreature : ICreature
     private readonly string _power;
     private readonly string _toughness;
     private readonly string _text;
+    private readonly string _imageUrl;
 
     public RedCreature(string cardName)
     {
@@ -23,6 +24,7 @@ public class RedCreature : ICreature
         _power = "?";
         _toughness = "?";
         _text = "Searching for card...";
+        _imageUrl = "";
 
         try
         {
@@ -35,6 +37,7 @@ public class RedCreature : ICreature
                 _power = cardData.Power ?? "?";
                 _toughness = cardData.Toughness ?? "?";
                 _text = cardData.Text ?? "No card text available";
+                _imageUrl = cardData.ImageUrl ?? "";
             }
             else
             {
@@ -74,4 +77,6 @@ public class RedCreature : ICreature
     }
 
     public string GetText() => _text;
+
+    public string GetImageUrl() => _imageUrl;
 }

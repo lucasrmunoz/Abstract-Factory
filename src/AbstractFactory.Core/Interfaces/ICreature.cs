@@ -30,4 +30,9 @@ public interface ICreature
     /// Get the creature's card text
     /// </summary>
     string GetText();
+
+    /// <summary>
+    /// Get the URL for the creature's card image
+    /// </summary>
+    string GetImageUrl();
 }

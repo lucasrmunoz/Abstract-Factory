@@ -14,6 +14,7 @@ public class BlueSpell : ISpell
     private readonly string _manaCost;
     private readonly string _type;
     private readonly string _text;
+    private readonly string _imageUrl;
 
     public BlueSpell(string cardName)
     {
@@ -21,6 +22,7 @@ public class BlueSpell : ISpell
         _manaCost = "N/A";
         _type = "Unknown";
         _text = "Searching for card...";
+        _imageUrl = "";
 
         try
         {
@@ -32,6 +34,7 @@ public class BlueSpell : ISpell
                 _manaCost = cardData.ManaCost ?? "N/A";
                 _type = cardData.Type ?? "Unknown";
                 _text = cardData.Text ?? "No card text available";
+                _imageUrl = cardData.ImageUrl ?? "";
             }
             else
             {
@@ -69,4 +72,6 @@ public class BlueSpell : ISpell
     }
 
     public string GetText() => _text;
+
+    public string GetImageUrl() => _imageUrl;
 }

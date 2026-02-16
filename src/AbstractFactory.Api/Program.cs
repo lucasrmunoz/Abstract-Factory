@@ -64,7 +64,8 @@ app.MapPost("/api/cards/creature", (CreateCardRequest request) =>
         PowerToughness = creature.GetPowerToughness(),
         Keywords = creature.GetKeywords(),
         Text = creature.GetText(),
-        DeckColor = request.DeckColor
+        DeckColor = request.DeckColor,
+        ImageUrl = creature.GetImageUrl()
     });
 })
 .WithName("CreateCreature")
@@ -88,7 +89,8 @@ app.MapPost("/api/cards/spell", (CreateCardRequest request) =>
         ManaCost = spell.GetManaCost(),
         Keywords = spell.GetKeywords(),
         Text = spell.GetText(),
-        DeckColor = request.DeckColor
+        DeckColor = request.DeckColor,
+        ImageUrl = spell.GetImageUrl()
     });
 })
 .WithName("CreateSpell")
@@ -119,6 +121,7 @@ record CreatureResponse
     public string Keywords { get; init; } = "";
     public string Text { get; init; } = "";
     public string DeckColor { get; init; } = "";
+    public string ImageUrl { get; init; } = "";
 }
 
 record SpellResponse
@@ -128,4 +131,5 @@ record SpellResponse
     public string Keywords { get; init; } = "";
     public string Text { get; init; } = "";
     public string DeckColor { get; init; } = "";
+    public string ImageUrl { get; init; } = "";
 }
