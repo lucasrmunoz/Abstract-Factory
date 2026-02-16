@@ -25,4 +25,9 @@ public interface ISpell
     /// Get the spell's card text
     /// </summary>
     string GetText();
+
+    /// <summary>
+    /// Get the URL for the spell's card image
+    /// </summary>
+    string GetImageUrl();
 }

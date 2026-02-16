@@ -32,6 +32,7 @@ public class MtgCardLookup
         public string? Power { get; set; }
         public string? Toughness { get; set; }
         public List<string>? Colors { get; set; }
+        public string? ImageUrl { get; set; }
     }
 
     /// <summary>
@@ -62,6 +63,18 @@ public class MtgCardLookup
 
         [JsonPropertyName("colors")]
         public List<string>? Colors { get; set; }
+
+        [JsonPropertyName("image_uris")]
+        public ScryfallImageUris? ImageUris { get; set; }
+    }
+
+    private class ScryfallImageUris
+    {
+        [JsonPropertyName("normal")]
+        public string? Normal { get; set; }
+
+        [JsonPropertyName("large")]
+        public string? Large { get; set; }
     }
 
     /// <summary>
@@ -91,7 +104,8 @@ public class MtgCardLookup
                 Text = response.OracleText,    // oracle_text → Text
                 Power = response.Power,
                 Toughness = response.Toughness,
-                Colors = response.Colors
+                Colors = response.Colors,
+                ImageUrl = response.ImageUris?.Normal
             };
         }
         catch

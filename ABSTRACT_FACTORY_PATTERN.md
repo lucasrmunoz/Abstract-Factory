@@ -262,6 +262,31 @@ DemonstrateFactory(factory, "Llanowar Elves", "Giant Growth");
 
 ---
 
+## Running the Console Application
+
+To see the Abstract Factory pattern in action with the interactive console UI:
+
+**From the project root directory:**
+
+```bash
+dotnet run --project src/AbstractFactory.Console
+```
+
+**Or navigate to the Console project:**
+
+```bash
+cd src/AbstractFactory.Console
+dotnet run
+```
+
+The console application uses [Spectre.Console](https://spectreconsole.net/) to provide an interactive experience where you can:
+
+- Choose between Red (Aggressive) or Blue (Control) deck factories
+- Enter creature and spell card names
+- See real MTG card data fetched from the API and displayed in themed tables
+
+---
+
 ## References
 
 - *Design Patterns: Elements of Reusable Object-Oriented Software* (Gamma, Helm, Johnson, Vlissides, 1994) - Chapter 3: Creational Patterns
