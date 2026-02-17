@@ -18,6 +18,7 @@ public class MtgCardLookup
     static MtgCardLookup()
     {
         _httpClient.DefaultRequestHeaders.Add("User-Agent", "AbstractFactoryMTG/1.0");
+        _httpClient.DefaultRequestHeaders.Add("Accept", "application/json");
     }
 
     /// <summary>
@@ -87,21 +88,27 @@ public class MtgCardLookup
         try
         {
             var url = $"cards/named?fuzzy={Uri.EscapeDataString(cardName)}";
-            var response = await _httpClient.GetFromJsonAsync<ScryfallCardResponse>(url);
+            var httpResponse = await _httpClient.GetAsync(url);
+            var body = await httpResponse.Content.ReadAsStringAsync();
 
-            // Scryfall returns {"object": "error"} for not found cards
+            if (!httpResponse.IsSuccessStatusCode)
+            {
+                return null;
+            }
+
+            var response = System.Text.Json.JsonSerializer.Deserialize<ScryfallCardResponse>(body);
+
             if (response?.Object == "error" || response == null)
             {
                 return null;
             }
 
-            // Map Scryfall response to CardData
             return new CardData
             {
                 Name = response.Name,
                 ManaCost = response.ManaCost,
-                Type = response.TypeLine,      // type_line → Type
-                Text = response.OracleText,    // oracle_text → Text
+                Type = response.TypeLine,
+                Text = response.OracleText,
                 Power = response.Power,
                 Toughness = response.Toughness,
                 Colors = response.Colors,
@@ -110,7 +117,6 @@ public class MtgCardLookup
         }
         catch
         {
-            // Network errors, deserialization errors, etc.
             return null;
         }
     }
