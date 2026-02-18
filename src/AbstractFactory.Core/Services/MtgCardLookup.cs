@@ -76,6 +76,58 @@ public class MtgCardLookup
 
         [JsonPropertyName("large")]
         public string? Large { get; set; }
+
+        [JsonPropertyName("art_crop")]
+        public string? ArtCrop { get; set; }
+    }
+
+    public class ArtVersion
+    {
+        public string? ImageUrl { get; set; }
+        public string? ArtCropUrl { get; set; }
+        public string? SetName { get; set; }
+        public string? SetCode { get; set; }
+        public string? CollectorNumber { get; set; }
+        public string? Artist { get; set; }
+    }
+
+    private class ScryfallSearchResponse
+    {
+        [JsonPropertyName("object")]
+        public string? Object { get; set; }
+
+        [JsonPropertyName("total_cards")]
+        public int TotalCards { get; set; }
+
+        [JsonPropertyName("has_more")]
+        public bool HasMore { get; set; }
+
+        [JsonPropertyName("next_page")]
+        public string? NextPage { get; set; }
+
+        [JsonPropertyName("data")]
+        public List<ScryfallSearchCard>? Data { get; set; }
+    }
+
+    private class ScryfallSearchCard
+    {
+        [JsonPropertyName("name")]
+        public string? Name { get; set; }
+
+        [JsonPropertyName("set_name")]
+        public string? SetName { get; set; }
+
+        [JsonPropertyName("set")]
+        public string? Set { get; set; }
+
+        [JsonPropertyName("collector_number")]
+        public string? CollectorNumber { get; set; }
+
+        [JsonPropertyName("artist")]
+        public string? Artist { get; set; }
+
+        [JsonPropertyName("image_uris")]
+        public ScryfallImageUris? ImageUris { get; set; }
     }
 
     /// <summary>
@@ -118,6 +170,64 @@ public class MtgCardLookup
         catch
         {
             return null;
+        }
+    }
+
+    /// <summary>
+    /// Fetches all unique art versions for a card from Scryfall search API.
+    /// Follows pagination to retrieve all results.
+    /// </summary>
+    public static async Task<List<ArtVersion>> GetArtVersions(string cardName)
+    {
+        try
+        {
+            var allVersions = new List<ArtVersion>();
+            string? url = $"cards/search?q=!\"{Uri.EscapeDataString(cardName)}\"+unique:art";
+
+            while (url != null)
+            {
+                var httpResponse = await _httpClient.GetAsync(url);
+
+                if (!httpResponse.IsSuccessStatusCode)
+                    break;
+
+                var body = await httpResponse.Content.ReadAsStringAsync();
+                var response = System.Text.Json.JsonSerializer.Deserialize<ScryfallSearchResponse>(body);
+
+                if (response?.Data == null)
+                    break;
+
+                allVersions.AddRange(
+                    response.Data
+                        .Where(card => card.ImageUris != null)
+                        .Select(card => new ArtVersion
+                        {
+                            ImageUrl = card.ImageUris?.Normal,
+                            ArtCropUrl = card.ImageUris?.ArtCrop,
+                            SetName = card.SetName,
+                            SetCode = card.Set,
+                            CollectorNumber = card.CollectorNumber,
+                            Artist = card.Artist
+                        })
+                );
+
+                // Follow pagination; Scryfall asks for 50-100ms between requests
+                if (response.HasMore && response.NextPage != null)
+                {
+                    await Task.Delay(100);
+                    url = response.NextPage;
+                }
+                else
+                {
+                    url = null;
+                }
+            }
+
+            return allVersions;
+        }
+        catch
+        {
+            return new List<ArtVersion>();
         }
     }
 }
