@@ -60,6 +60,7 @@ export default function Home() {
   const [addingToDeck, setAddingToDeck] = useState<string | null>(null);
   const [hoveredArtUrl, setHoveredArtUrl] = useState<string | null>(null);
 
+
   function isCreature(typeLine: string): boolean {
     return typeLine.toLowerCase().includes("creature");
   }
@@ -444,7 +445,7 @@ export default function Home() {
               </div>
 
               {/* Card List */}
-              <div className="space-y-2 max-h-[calc(100vh-24rem)] overflow-y-auto">
+              <div className="space-y-2 overflow-y-auto max-h-48">
                 {activeDeck.length === 0 ? (
                   <p className="text-foreground/40 text-sm text-center py-4">
                     No cards yet. Search and add cards above.
@@ -490,20 +491,38 @@ export default function Home() {
                 )}
               </div>
 
-              {/* Art Hover Preview */}
-              {hoveredArtUrl && (
+              {/* Art Preview */}
+              {(hoveredArtUrl || selectedArtUrl) && searchResult && (
                 <div className="mt-4 pt-4 border-t border-purple/20">
                   <p className="text-orange font-semibold text-xs uppercase tracking-wide mb-2">
-                    Art Preview
+                    {hoveredArtUrl ? "Art Preview" : searchResult.name}
                   </p>
                   <Image
-                    src={hoveredArtUrl}
-                    alt="Art preview"
+                    src={hoveredArtUrl || selectedArtUrl}
+                    alt={searchResult.name || "Art preview"}
                     width={288}
                     height={401}
                     className="rounded-lg w-full h-auto"
-                    key={hoveredArtUrl}
+                    key={hoveredArtUrl || selectedArtUrl}
                   />
+                  {!hoveredArtUrl && (
+                    <div className="flex gap-2 mt-3">
+                      <button
+                        onClick={() => handleAddToDeck("red")}
+                        disabled={addingToDeck !== null}
+                        className="flex-1 bg-red-deck/20 border border-red-deck text-red-deck hover:bg-red-deck/30 font-semibold text-xs px-2 py-1.5 rounded transition-colors disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer"
+                      >
+                        {addingToDeck === "red" ? "Adding..." : "+ Red"}
+                      </button>
+                      <button
+                        onClick={() => handleAddToDeck("blue")}
+                        disabled={addingToDeck !== null}
+                        className="flex-1 bg-blue-deck/20 border border-blue-deck text-blue-deck hover:bg-blue-deck/30 font-semibold text-xs px-2 py-1.5 rounded transition-colors disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer"
+                      >
+                        {addingToDeck === "blue" ? "Adding..." : "+ Blue"}
+                      </button>
+                    </div>
+                  )}
                 </div>
               )}
             </div>
